@@ -61,9 +61,12 @@ class StandardNet:
 						'Output_L2': weight_variable([self.output_l2], self.namespace+"BIAS_OUTPUT_L2")
 						}
 		
+		# input size: [batch, input_dim], [input_dim-2+2*state_dim, hidden_units_state]
+		# [batch, hidden_units_state], [hidden_units_state, state_dim]
+		
 		# dxl TODO: Add to the __init__ method of the StandardNet class
 		self.att_l1 = hidden_units_state  # Attention network's hidden units
-		self.att_out = self.state_dim  # The output dimension of the attention network equals the state dimension
+		self.att_out = hidden_units_state  # The output dimension of the attention network equals the state dimension
 
 		# Weights for the attention network
 		self.weights['Att_L1'] = weight_variable([self.state_input, self.att_l1], self.namespace+"WEIGHT_ATT_L1")
