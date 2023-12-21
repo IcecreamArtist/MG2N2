@@ -81,29 +81,30 @@ class StandardNet:
 		# end TODO
 
 	# Modify the netSt method of the StandardNet class
-	def netSt(self, inp):
-		with tf.variable_scope('State_net'):
-			# State network first layer
-			layer1 = tf.nn.tanh(tf.add(tf.matmul(inp, self.weights["State_L1"]), self.biases["State_L1"]))
-			
-			# Attention network
-			with tf.variable_scope('Attention_net'):
-				att_layer1 = tf.nn.tanh(tf.add(tf.matmul(inp, self.weights["Att_L1"]), self.biases["Att_L1"]))
-				att_scores = tf.nn.softmax(tf.add(tf.matmul(att_layer1, self.weights["Att_Out"]), self.biases["Att_Out"]), axis=1)
-				
-				# Apply attention scores to the first layer
-				layer1_with_attention = tf.multiply(layer1, att_scores)
-			
-			# State network second layer
-			layer2 = tf.nn.tanh(tf.add(tf.matmul(layer1_with_attention, self.weights["State_L2"]), self.biases["State_L2"]))
-			return layer2
-
-	#defines the state network
 	# def netSt(self, inp):
 	# 	with tf.variable_scope('State_net'):
-	# 		layer1 = tf.nn.tanh(tf.add(tf.matmul(inp,self.weights["State_L1"]),self.biases["State_L1"]))
-	# 		layer2 = tf.nn.tanh(tf.add(tf.matmul(layer1, self.weights["State_L2"]), self.biases["State_L2"]))
+	# 		# State network first layer
+	# 		layer1 = tf.nn.tanh(tf.add(tf.matmul(inp, self.weights["State_L1"]), self.biases["State_L1"]))
+			
+	# 		# Attention network
+	# 		with tf.variable_scope('Attention_net'):
+	# 			att_layer1 = tf.nn.tanh(tf.add(tf.matmul(inp, self.weights["Att_L1"]), self.biases["Att_L1"]))
+	# 			att_scores = tf.nn.softmax(tf.add(tf.matmul(att_layer1, self.weights["Att_Out"]), self.biases["Att_Out"]), axis=1)
+				
+	# 			# Apply attention scores to the first layer
+	# 			layer1_with_attention = tf.multiply(layer1, att_scores)
+			
+	# 		# State network second layer
+	# 		layer2 = tf.nn.tanh(tf.add(tf.matmul(layer1_with_attention, self.weights["State_L2"]), self.biases["State_L2"]))
 	# 		return layer2
+
+	#defines the state network
+	def netSt(self, inp):
+		with tf.variable_scope('State_net'):
+			layer1 = tf.nn.tanh(tf.add(tf.matmul(inp,self.weights["State_L1"]),self.biases["State_L1"]))
+			layer2 = tf.nn.tanh(tf.add(tf.matmul(layer1, self.weights["State_L2"]), self.biases["State_L2"]))
+			print(layer2.get_shape())
+			return layer2
 
 	#defines the output network
 	def netOut(self, inp):
