@@ -63,10 +63,12 @@ class StandardNet:
 		
 		# input size: [batch, input_dim], [input_dim-2+2*state_dim, hidden_units_state]
 		# [batch, hidden_units_state], [hidden_units_state, state_dim]
+		# for attn layer: input is state_input, output is input of attn scores.
+		# for attn scores: input is output of state L1: correct, output is input of state L2: 
 		
 		# dxl TODO: Add to the __init__ method of the StandardNet class
 		self.att_l1 = hidden_units_state  # Attention network's hidden units
-		self.att_out = hidden_units_state  # The output dimension of the attention network equals the state dimension
+		self.att_out = self.state_l1  # The output dimension of the attention network equals the state dimension
 
 		# Weights for the attention network
 		self.weights['Att_L1'] = weight_variable([self.state_input, self.att_l1], self.namespace+"WEIGHT_ATT_L1")
